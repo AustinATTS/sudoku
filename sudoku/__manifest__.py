@@ -26,6 +26,12 @@ Key Features:
     """,
     'currency': 'EUR',
     'price': 0.00,
+    'images': [
+        'static/description/banner.png',
+        'static/description/screenshot_1.png',
+        'static/description/screenshot_2.png',
+        'static/description/screenshot_3.png',
+    ],
     'data': [
         'views/sudoku_game_page_templates.xml',
     ],
