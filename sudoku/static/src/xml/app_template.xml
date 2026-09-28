@@ -2,14 +2,14 @@
 <templates xml:space="preserve">
     <t t-name="sudoku.AppTemplate">
         <div class="sudoku-container">
-            <t t-if="state.statusMessage">
+            <t t-if="this.state.statusMessage">
                 <div class="sudoku-status" role="alert">
                     <span>
-                        <t t-esc="state.statusMessage"/>
+                        <t t-out="this.state.statusMessage"/>
                     </span>
                 </div>
             </t>
-            <t t-if="state.loading">
+            <t t-if="this.state.loading">
                 <div class="sudoku-loading">
                     <div class="sudoku-loading-text">
                         Loading your puzzle...
@@ -22,12 +22,12 @@
             <t t-else="">
                 <div class="sudoku-board-frame">
                     <div class="sudoku-grid">
-                        <t t-foreach="state.grid" t-as="cell" t-key="cell_index">
+                        <t t-foreach="this.state.grid" t-as="cell" t-key="cell_index">
                             <div class="sudoku-cell-wrapper"
-                                 t-att-class="{ 'box-shaded': ( ( Math.floor(Math.floor(cell_index / 9) / 3) + Math.floor((cell_index % 9) / 3) ) % 2 === 0 ), 'border-right-bold': ( cell_index % 3 === 2 &amp;&amp; cell_index % 9 !== 8 ), 'border-bottom-bold': ( Math.floor(cell_index / 9) % 3 === 2 &amp;&amp; Math.floor(cell_index / 9) !== 8 ), 'given': state.initialGrid[cell_index] !== 0, 'selected': state.selectedCell === cell_index }">
+                                 t-att-class="{ 'box-shaded': ( ( Math.floor(Math.floor(cell_index / 9) / 3) + Math.floor((cell_index % 9) / 3) ) % 2 === 0 ), 'border-right-bold': ( cell_index % 3 === 2 &amp;&amp; cell_index % 9 !== 8 ), 'border-bottom-bold': ( Math.floor(cell_index / 9) % 3 === 2 &amp;&amp; Math.floor(cell_index / 9) !== 8 ), 'given': this.state.initialGrid[cell_index] !== 0, 'selected': this.state.selectedCell === cell_index }">
                                 <input type="text" inputmode="numeric" pattern="[1-9]*" maxlength="1"
                                        class="sudoku-cell-input" t-att-value="cell !== 0 ? cell : ''"
-                                       t-att-readonly="state.initialGrid[cell_index] !== 0 || state.isSolved"
+                                       t-att-readonly="this.state.initialGrid[cell_index] !== 0 || this.state.isSolved"
                                        t-on-focus="() => this.selectCell(cell_index)"
                                        t-on-input="(ev) => this.handleInput(cell_index, ev.target.value)"/>
                             </div>
@@ -41,8 +41,8 @@
                                 Difficulty
                             </span>
                         </label>
-                        <select id="sudoku-difficulty" class="form-select sudoku-select" t-model="state.difficulty"
-                                t-on-change="startNewGame">
+                        <select id="sudoku-difficulty" class="form-select sudoku-select" t-att-value="this.state.difficulty"
+                                t-on-change="this.onDifficultyChange">
                             <option value="easy">
                                 Easy
                             </option>
@@ -58,22 +58,22 @@
                         </select>
                     </div>
                     <div class="sudoku-control-actions">
-                        <button type="button" class="btn sudoku-btn sudoku-btn-hint" t-on-click="useHint"
-                                t-att-disabled="state.hintsRemaining === 0 || state.isSolved">
+                        <button type="button" class="btn sudoku-btn sudoku-btn-hint" t-on-click="this.useHint"
+                                t-att-disabled="this.state.hintsRemaining === 0 || this.state.isSolved">
                             <span>
                                 Hint
                                 <small>
-                                    (<t t-esc="state.hintsRemaining"/>left)
+                                    (<t t-out="this.state.hintsRemaining"/>left)
                                 </small>
                             </span>
                         </button>
-                        <button type="button" class="btn sudoku-btn sudoku-btn-solve" t-on-click="confirmSolveBoard"
-                                t-att-disabled="state.isSolved">
+                        <button type="button" class="btn sudoku-btn sudoku-btn-solve" t-on-click="this.confirmSolveBoard"
+                                t-att-disabled="this.state.isSolved">
                             <span>
                                 Reveal Solution
                             </span>
                         </button>
-                        <button type="button" class="btn sudoku-btn sudoku-btn-new" t-on-click="skipBoard">
+                        <button type="button" class="btn sudoku-btn sudoku-btn-new" t-on-click="this.skipBoard">
                             <span>
                                 New Puzzle
                             </span>
@@ -81,7 +81,7 @@
                     </div>
                 </div>
             </t>
-            <t t-if="state.showSolveModal">
+            <t t-if="this.state.showSolveModal">
                 <div class="modal d-block sudoku-modal" tabindex="-1" role="dialog"
                      style="background: rgba(58, 28, 4, 0.55)">
                     <div class="modal-dialog modal-dialog-centered">
@@ -92,7 +92,7 @@
                                         Reveal the board?
                                     </h5>
                                 </div>
-                                <button type="button" class="btn-close" t-on-click="closeModal">
+                                <button type="button" class="btn-close" t-on-click="this.closeModal">
 
                                 </button>
                             </div>
@@ -105,10 +105,10 @@
                                 </p>
                             </div>
                             <div class="modal-footer sudoku-modal-footer">
-                                <button type="button" class="btn sudoku-modal-cancel" t-on-click="closeModal">
+                                <button type="button" class="btn sudoku-modal-cancel" t-on-click="this.closeModal">
                                     Keep Playing
                                 </button>
-                                <button type="button" class="btn sudoku-modal-confirm" t-on-click="executeSolveBoard">
+                                <button type="button" class="btn sudoku-modal-confirm" t-on-click="this.executeSolveBoard">
                                     Reveal Solution
                                 </button>
                             </div>

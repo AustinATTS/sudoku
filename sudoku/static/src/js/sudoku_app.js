@@ -1,6 +1,6 @@
 /** @odoo-module **/
 
-import {Component, onWillStart, useState} from "@odoo/owl";
+import {Component, onWillStart, proxy} from "@odoo/owl";
 import {registry} from "@web/core/registry";
 import {rpc} from "@web/core/network/rpc";
 
@@ -8,7 +8,7 @@ export class SudokuApp extends Component {
     static template = "sudoku.AppTemplate";
 
     setup() {
-        this.state = useState({
+        this.state = proxy({
             grid: Array(81).fill(0),
             initialGrid: Array(81).fill(0),
             solution: Array(81).fill(0),
@@ -42,6 +42,11 @@ export class SudokuApp extends Component {
         this.state.solution = [...data.solution];
         this.state.loading = false;
     }
+
+    onDifficultyChange = (event) => {
+        this.state.difficulty = event.target.value;
+        this.startNewGame();
+    };
 
     selectCell(index) {
         this.state.selectedCell = index;
