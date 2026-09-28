@@ -3,14 +3,14 @@
 
 {
     'name': 'Sudoku',
-    'version': '0.2.2',
+    'version': '0.2.3',
     'category': 'Website',
     'website': 'https://www.toastysoftware.co.uk/journal/sudoku-8',
     'summary': 'Interactive Sudoku game powered by OWL and Python algorithms',
     'depends': ['web', 'website'],
     'description': """
-Sudoku for Odoo 19
-==================
+Sudoku for Odoo 19 & 20
+=======================
 
 Enjoy a fresh batch of daily Sudoku puzzles right inside your Odoo Website! 
 Featuring a warm bakery theme, intelligent board generation, multiple difficulty 
